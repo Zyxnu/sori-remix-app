@@ -9,12 +9,16 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@google/genai": "^1.44.0",
     "@react-router/node": "7.12.0",
     "@react-router/serve": "7.12.0",
     "isbot": "^5.1.31",
+    "lucide-react": "^0.577.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-router": "7.12.0"
+    "react-markdown": "^10.1.0",
+    "react-router": "7.12.0",
+    "recharts": "^3.8.0"
   },
   "devDependencies": {
     "@react-router/dev": "7.12.0",
