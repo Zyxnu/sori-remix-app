@@ -65,7 +65,10 @@ const AIReportTab: React.FC<AIReportTabProps> = ({ isAnalyzing, analysis }) => {
       </div>
       <div ref={reportRef}>
         {isAnalyzing ? (
-          <div className="py-32 text-center text-3xl font-black">正在深度分析...</div>
+          <div className="py-40 flex flex-col items-center justify-center space-y-8">
+            <Loader2 className="w-20 h-20 text-purple-600 animate-spin" />
+            <p className="text-3xl font-black text-gray-400">正在深度分析專案數據並生成顧問報告...</p>
+          </div>
         ) : (
           <div className="markdown-body prose prose-2xl max-w-none">
             <ReactMarkdown>{analysis}</ReactMarkdown>

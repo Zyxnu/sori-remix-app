@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import {
   Plus,
   Trash2,
@@ -12,8 +12,6 @@ import {
   Building2,
   Package,
   AlignLeft,
-  Maximize2,
-  Minimize2,
   Info,
   ArrowRightLeft,
   Globe,
@@ -127,20 +125,39 @@ const App: React.FC = () => {
   const [isAnalyzingImpactValues, setIsAnalyzingImpactValues] = useState(false);
   const [isCalculatingSROI, setIsCalculatingSROI] = useState(false);
   const [analysis, setAnalysis] = useState<string>("");
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [lastParseError, setLastParseError] = useState<string | null>(null);
   const [selectedFileInfo, setSelectedFileInfo] = useState<string | null>(null);
 
-  useEffect(() => {
-    const handleFullscreenChange = () => setIsFullscreen(!!document.fullscreenElement);
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
-  }, []);
+  const isSetupComplete = !!(setupData.name || setupData.activities.length > 0 || userInputs.length > 0 || userOutputs.length > 0);
 
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-    else document.exitFullscreen();
+  const handleReset = () => {
+    setActiveTab('setup');
+    setSetupData({
+      name: '', period: '', location: '', type: '', motivation: '',
+      expectedGoals: '', participants: '', staff: '', funds: '', humanResources: '',
+      activities: []
+    });
+    setUserInputs([]);
+    setUserOutputs([]);
+    setStakeholders([]);
+    setOutcomes([]);
+    setFinancialProxies([]);
+    setImpactFactors([]);
+    setImpactValues([]);
+    setSroiResult(null);
+    setAnalysis("");
+    setErrorMsg(null);
+    setLastParseError(null);
+    setSelectedFileInfo(null);
+    setIsAnalyzing(false);
+    setIsAnalyzingStakeholders(false);
+    setIsAnalyzingOutcomes(false);
+    setIsAnalyzingFinancialProxies(false);
+    setIsAnalyzingImpactFactors(false);
+    setIsAnalyzingImpactValues(false);
+    setIsCalculatingSROI(false);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const runAllAnalysis = async (
@@ -698,9 +715,9 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-[#f4f7f9] text-gray-900 font-['Inter',_'Noto_Sans_TC'] overflow-x-hidden">
       <Header
-        isFullscreen={isFullscreen}
-        toggleFullscreen={toggleFullscreen}
         onTriggerAI={triggerAIAnalysis}
+        onReset={handleReset}
+        isSetupComplete={isSetupComplete}
       />
 
       <main className="flex-grow max-w-[1600px] w-full mx-auto px-10 py-12 space-y-12">
@@ -716,7 +733,15 @@ const App: React.FC = () => {
           </div>
         )}
 
-        <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+        <div className="space-y-2">
+          <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} isSetupComplete={isSetupComplete} />
+          {!isSetupComplete && (
+            <p className="text-amber-600 font-bold text-lg flex items-center gap-2">
+              <span>🔒</span>
+              請先完成 Tab 0 計畫解析（上傳 PDF 或輸入專案數據）以解鎖後續步驟
+            </p>
+          )}
+        </div>
 
         {activeTab === 'setup' && (
           <SetupTab
