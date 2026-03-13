@@ -7,6 +7,7 @@
 > ℹ️ **專案指南與教學**（詳見 [`docs/`](./docs/) 資料夾）
 > - **系統架構與開發**：想了解資料流程、前端分頁設計與 Gemini API 串接，請參閱 [**專案架構指南**](./docs/ARCHITECTURE.md)
 > - **App.tsx 功能說明**：核心元件狀態管理與 SROI 分析流程，請參閱 [**APP_FUNCTIONALITY.md**](./docs/APP_FUNCTIONALITY.md)
+> - **除錯建議**：步驟式流程的資料驗證與 Debug 方法，請參閱 [**DEBUG_建議.md**](./docs/DEBUG_建議.md)
 > - **專案上線與部署**：使用 Render 雲端將本專案發佈上線的圖文流程，請參閱 [**Render 部署教學**](./docs/RENDER_DEPLOY.md)
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
